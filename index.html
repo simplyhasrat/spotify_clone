@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spotify – Web Player: Music for everyone</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231ed760'><path d='M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.503 17.306c-.215.353-.674.464-1.026.248-2.809-1.716-6.345-2.104-10.51-1.152-.401.092-.796-.157-.888-.558-.092-.401.157-.796.558-.888 4.568-1.044 8.49-.607 11.618 1.304.352.215.464.674.248 1.026zm1.47-3.264c-.27.439-.848.577-1.287.307-3.216-1.977-8.118-2.548-11.921-1.393-.497.151-1.025-.133-1.176-.63-.151-.497.133-1.025.63-1.176 4.348-1.32 9.756-.684 13.447 1.585.439.27.577.848.307 1.287zm.126-3.411c-3.856-2.29-10.222-2.502-13.907-1.383-.591.179-1.218-.16-1.397-.751-.179-.591.16-1.218.751-1.397 4.237-1.286 11.272-1.037 15.698 1.589.532.316.706 1.008.39 1.54-.316.533-1.008.707-1.54.391z'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <!-- Root Container -->
+  <div class="spotify-app">
+    
+    <!-- Top Navigation Bar -->
+    <header class="top-nav" id="topNav">
+      <div class="nav-left">
+        <!-- Spotify Logo -->
+        <a href="#" class="spotify-logo-link" title="Spotify" aria-label="Spotify">
+          <svg class="spotify-icon" viewBox="0 0 24 24" width="32" height="32" fill="currentColor">
+            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.503 17.306c-.215.353-.674.464-1.026.248-2.809-1.716-6.345-2.104-10.51-1.152-.401.092-.796-.157-.888-.558-.092-.401.157-.796.558-.888 4.568-1.044 8.49-.607 11.618 1.304.352.215.464.674.248 1.026zm1.47-3.264c-.27.439-.848.577-1.287.307-3.216-1.977-8.118-2.548-11.921-1.393-.497.151-1.025-.133-1.176-.63-.151-.497.133-1.025.63-1.176 4.348-1.32 9.756-.684 13.447 1.585.439.27.577.848.307 1.287zm.126-3.411c-3.856-2.29-10.222-2.502-13.907-1.383-.591.179-1.218-.16-1.397-.751-.179-.591.16-1.218.751-1.397 4.237-1.286 11.272-1.037 15.698 1.589.532.316.706 1.008.39 1.54-.316.533-1.008.707-1.54.391z"/>
+          </svg>
+        </a>
+
+        <!-- Home Button -->
+        <button class="nav-round-btn active" id="homeBtn" title="Home" aria-label="Home">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+            <path d="M12.5 3.247a1 1 0 0 0-1 0L4 7.577V20h5v-6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v6h5V7.577l-7.5-4.33zm-8.5 5.51 8-4.62 8 4.62V22h-9v-6a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v6H2V8.757z" style="display:none;"/>
+            <path d="M13.5 1.515a3 3 0 0 0-3 0L3 5.845a2 2 0 0 0-1 1.732V21a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-6h4v6a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V7.577a2 2 0 0 0-1-1.732l-7.5-4.33z"/>
+          </svg>
+        </button>
+
+        <!-- Search Bar -->
+        <div class="search-box-wrapper">
+          <div class="search-input-container">
+            <span class="search-icon-left">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                <path d="M10.533 1.278a9.255 9.255 0 1 0 5.688 16.554l5.378 5.378a1 1 0 0 0 1.414-1.414l-5.378-5.378A9.255 9.255 0 0 0 10.533 1.278zm-7.255 9.255a7.255 7.255 0 1 1 14.51 0 7.255 7.255 0 0 1-14.51 0z"/>
+              </svg>
+            </span>
+            <input type="text" id="searchInput" class="search-input" placeholder="What do you want to play?" autocomplete="off" spellcheck="false">
+            <button class="clear-search-btn" id="clearSearchBtn" title="Clear search" aria-label="Clear search">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+              </svg>
+            </button>
+            <div class="search-box-divider"></div>
+            <button class="browse-btn" title="Browse" aria-label="Browse">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                <path d="M4 3a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H4zm1 2h2v14H5V5zm8-2a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1h-4zm1 2h2v14h-2V5zm6.5 0a1 1 0 0 1 1 1v12a1 1 0 0 1-2 0V6a1 1 0 0 1 1-1z"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Nav Links & Buttons -->
+      <div class="nav-right">
+        <a href="#premium" class="nav-link">Premium</a>
+        <a href="#support" class="nav-link">Support</a>
+        <a href="#download" class="nav-link">Download</a>
+        <div class="nav-vertical-divider"></div>
+        <button class="btn-install-app" id="installAppBtn">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+            <path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zm-1 5a1 1 0 1 1 2 0v5.586l1.293-1.293a1 1 0 1 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 1.414-1.414L11 13.586V8z"/>
+          </svg>
+          <span>Install App</span>
+        </button>
+        <button class="btn-signup" id="signupNavBtn">Sign up</button>
+        <button class="btn-login" id="loginNavBtn">Log in</button>
+      </div>
+    </header>
+
+    <!-- Main Content Layout (Sidebar + Center Content) -->
+    <div class="main-body-container">
+      
+      <!-- Left Sidebar (Your Library) -->
+      <aside class="sidebar-library" id="sidebarLibrary">
+        <div class="library-header">
+          <div class="library-title" title="Collapse Your Library">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+              <path d="M3 22a1 1 0 0 1-1-1V3a1 1 0 0 1 2 0v18a1 1 0 0 1-1 1zM15.5 2.134A1 1 0 0 0 14 3v18a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V3a1 1 0 0 0-1.5-.866l-5 3zM16 4.732l4-2.4V20h-4V4.732zM8.5 2.134A1 1 0 0 0 7 3v18a1 1 0 0 0 1.5.866l5-3A1 1 0 0 0 14 18V3a1 1 0 0 0-1-1H9a1 1 0 0 0-.5.134zM9 4h3v13.268l-3 1.8V4z"/>
+            </svg>
+            <span>Your Library</span>
+          </div>
+          <button class="create-playlist-pill-btn" id="createPlaylistNavBtn" title="Create playlist or folder">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+              <path d="M11 11V4h2v7h7v2h-7v7h-2v-7H4v-2h7z"/>
+            </svg>
+            <span>Create</span>
+          </button>
+        </div>
+
+        <!-- Sidebar Scrollable Cards Section -->
+        <div class="sidebar-cards-scroll">
+          
+          <!-- Card 1: Create your first playlist -->
+          <div class="sidebar-action-card">
+            <h3 class="card-headline">Create your first playlist</h3>
+            <p class="card-subtext">It's easy, we'll help you</p>
+            <button class="btn-pill-white" id="createPlaylistBtn">Create playlist</button>
+          </div>
+
+          <!-- Card 2: Podcasts -->
+          <div class="sidebar-action-card">
+            <h3 class="card-headline">Let's find some podcasts to follow</h3>
+            <p class="card-subtext">We'll keep you updated on new episodes</p>
+            <button class="btn-pill-white" id="browsePodcastsBtn">Browse podcasts</button>
+          </div>
+
+        </div>
+
+        <!-- Sidebar Footer Legal Links -->
+        <div class="sidebar-footer">
+          <div class="sidebar-legal-links">
+            <a href="#legal">Legal</a>
+            <a href="#safety">Safety & Privacy Center</a>
+            <a href="#privacy">Privacy Policy</a>
+            <a href="#cookies">Cookies</a>
+            <a href="#ads">About Ads</a>
+            <a href="#accessibility">Accessibility</a>
+            <a href="#cookies-settings">Cookies</a>
+          </div>
+
+          <!-- Language Selector Pill -->
+          <div class="sidebar-language-wrapper">
+            <button class="btn-language-pill" id="languageBtn">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                <path d="M12 2a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2zm0 18a7.95 7.95 0 0 1-5.657-2.343A7.95 7.95 0 0 1 4 12a7.95 7.95 0 0 1 2.343-5.657A7.95 7.95 0 0 1 12 4a7.95 7.95 0 0 1 5.657 2.343A7.95 7.95 0 0 1 20 12a7.95 7.95 0 0 1-2.343 5.657A7.95 7.95 0 0 1 12 20zm0-14a5.952 5.952 0 0 0-4.243 1.757A5.952 5.952 0 0 0 6 12a5.952 5.952 0 0 0 1.757 4.243A5.952 5.952 0 0 0 12 18a5.952 5.952 0 0 0 4.243-1.757A5.952 5.952 0 0 0 18 12a5.952 5.952 0 0 0-1.757-4.243A5.952 5.952 0 0 0 12 6zm-1 2h2v8h-2V8zm-3 2h1v4H8v-4zm7 0h1v4h-1v-4z" style="display:none;"/>
+                <path d="M12 2a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2zm6.93 6h-2.95a15.65 15.65 0 0 0-1.38-3.56A8.03 8.03 0 0 1 18.93 8zM12 4.07c.83 1.2 1.48 2.53 1.91 3.93h-3.82c.43-1.4 1.08-2.73 1.91-3.93zm-4.6 3.93H4.45a8.03 8.03 0 0 1 4.35-3.56A15.65 15.65 0 0 0 7.4 8zm-2.95 4c0-.69.1-1.36.27-2h3.38c-.08.66-.12 1.32-.12 2s.04 1.34.12 2H4.72a7.992 7.992 0 0 1-.27-2zm1.02 4h2.93c.38 1.28.85 2.48 1.4 3.56A8.03 8.03 0 0 1 5.47 16zm4.62 0h3.82c-.43 1.4-1.08 2.73-1.91 3.93-.83-1.2-1.48-2.53-1.91-3.93zm4.51 3.56c.55-1.08 1.02-2.28 1.4-3.56h2.93a8.03 8.03 0 0 1-4.33 3.56zM15.9 14c.08-.66.12-1.32.12-2s-.04-1.34-.12-2h3.38c.17.64.27 1.31.27 2s-.1 1.36-.27 2H15.9z"/>
+              </svg>
+              <span>English</span>
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Center Main Content View -->
+      <main class="main-content-scroll" id="mainContentScroll">
+        <div class="content-inner-wrapper">
+          
+          <!-- Search Results Container (hidden by default) -->
+          <section class="content-section" id="searchResultsSection" style="display: none;">
+            <div class="section-header">
+              <h2 class="section-title" id="searchResultsTitle">Search results</h2>
+              <button class="section-show-all" id="clearSearchResultsBtn">Clear</button>
+            </div>
+            <div class="cards-grid" id="searchResultsGrid"></div>
+          </section>
+
+          <!-- Section 1: Trending songs -->
+          <section class="content-section" id="trendingSongsSection">
+            <div class="section-header">
+              <h2 class="section-title">Trending songs</h2>
+              <a href="#show-all-trending" class="section-show-all">Show all</a>
+            </div>
+
+            <div class="cards-grid songs-grid">
+              
+              <!-- Song 1: Dilruba Dilnasheen -->
+              <div class="music-card song-card" data-song-id="1" data-title="Dilruba Dilnasheen" data-artist="Rito Riba, Siddhant Kaushal" data-cover="assets/images/song_dilruba_hd.jpg">
+                <div class="card-image-box">
+                  <img src="assets/images/song_dilruba_hd.jpg" alt="Dilruba Dilnasheen" class="card-img" loading="lazy">
+                  <button class="card-play-btn" title="Play Dilruba Dilnasheen" aria-label="Play Dilruba Dilnasheen">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                      <path d="m7.05 3.606 13.49 7.788a.7.7 0 0 1 0 1.212L7.05 20.394A.7.7 0 0 1 6 19.788V4.212a.7.7 0 0 1 1.05-.606z"/>
+                    </svg>
+                  </button>
+                </div>
+                <div class="card-info">
+                  <h3 class="card-title" title="Dilruba Dilnasheen">Dilruba Dilnasheen</h3>
+                  <p class="card-subtitle" title="Rito Riba, Siddhant Kaushal">Rito Riba, Siddhant Kaushal</p>
+                </div>
+              </div>
+
+              <!-- Song 2: Veezha Veera -->
+              <div class="music-card song-card" data-song-id="2" data-title="Veezha Veera (From &quot;OM Chapter 1: Udhiram - The Blood Wood&quot;)" data-artist="Sai Abhyankkar, Tippu, Arun Srinivasan" data-cover="assets/images/song_veezha_hd.jpg">
+                <div class="card-image-box">
+                  <img src="assets/images/song_veezha_hd.jpg" alt="Veezha Veera" class="card-img" loading="lazy">
+                  <button class="card-play-btn" title="Play Veezha Veera" aria-label="Play Veezha Veera">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                      <path d="m7.05 3.606 13.49 7.788a.7.7 0 0 1 0 1.212L7.05 20.394A.7.7 0 0 1 6 19.788V4.212a.7.7 0 0 1 1.05-.606z"/>
+                    </svg>
+                  </button>
+                </div>
+                <div class="card-info">
+                  <h3 class="card-title" title="Veezha Veera (From &quot;OM Chapter 1: Udhiram - The Blood Wood&quot;)">Veezha Veera (From "OM Chapter 1: Udhiram - The Blood Wood")</h3>
+                  <p class="card-subtitle" title="Sai Abhyankkar, Tippu, Arun Srinivasan">Sai Abhyankkar, Tippu, Arun Srinivasan</p>
+                </div>
+              </div>
+
+              <!-- Song 3: Kelwa Ke Paat Par -->
+              <div class="music-card song-card" data-song-id="3" data-title="Kelwa Ke Paat Par" data-artist="Sharda Sinha" data-cover="assets/images/song_kelwa_hd.jpg">
+                <div class="card-image-box">
+                  <img src="assets/images/song_kelwa_hd.jpg" alt="Kelwa Ke Paat Par" class="card-img" loading="lazy">
+                  <button class="card-play-btn" title="Play Kelwa Ke Paat Par" aria-label="Play Kelwa Ke Paat Par">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                      <path d="m7.05 3.606 13.49 7.788a.7.7 0 0 1 0 1.212L7.05 20.394A.7.7 0 0 1 6 19.788V4.212a.7.7 0 0 1 1.05-.606z"/>
+                    </svg>
+                  </button>
+                </div>
+                <div class="card-info">
+                  <h3 class="card-title" title="Kelwa Ke Paat Par">Kelwa Ke Paat Par</h3>
+                  <p class="card-subtitle" title="Sharda Sinha">Sharda Sinha</p>
+                </div>
+              </div>
+
+              <!-- Song 4: Uga Ho Surujdev -->
+              <div class="music-card song-card" data-song-id="4" data-title="Uga Ho Surujdev Bhel Bhinsarva (From &quot;Chhath Pooja Ke Geet&quot;)" data-artist="Anuradha Paudwal" data-cover="assets/images/song_ugaho_hd.jpg">
+                <div class="card-image-box">
+                  <img src="assets/images/song_ugaho_hd.jpg" alt="Uga Ho Surujdev Bhel Bhinsarva" class="card-img" loading="lazy">
+                  <button class="card-play-btn" title="Play Uga Ho Surujdev" aria-label="Play Uga Ho Surujdev">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                      <path d="m7.05 3.606 13.49 7.788a.7.7 0 0 1 0 1.212L7.05 20.394A.7.7 0 0 1 6 19.788V4.212a.7.7 0 0 1 1.05-.606z"/>
+                    </svg>
+                  </button>
+                </div>
+                <div class="card-info">
+                  <h3 class="card-title" title="Uga Ho Surujdev Bhel Bhinsarva (From &quot;Chhath Pooja Ke Geet&quot;)">Uga Ho Surujdev Bhel Bhinsarva (From "Chhath Pooja Ke Geet")</h3>
+                  <p class="card-subtitle" title="Anuradha Paudwal">Anuradha Paudwal</p>
+                </div>
+              </div>
+
+              <!-- Song 5: Aeroplane -->
+              <div class="music-card song-card" data-song-id="5" data-title="Aeroplane" data-artist="Sushin Shyam, Gana Bala, Rajpriyan" data-cover="assets/images/song_aeroplane_hd.jpg">
+                <div class="card-image-box">
+                  <img src="assets/images/song_aeroplane_hd.jpg" alt="Aeroplane" class="card-img" loading="lazy">
+                  <button class="card-play-btn" title="Play Aeroplane" aria-label="Play Aeroplane">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                      <path d="m7.05 3.606 13.49 7.788a.7.7 0 0 1 0 1.212L7.05 20.394A.7.7 0 0 1 6 19.788V4.212a.7.7 0 0 1 1.05-.606z"/>
+                    </svg>
+                  </button>
+                </div>
+                <div class="card-info">
+                  <h3 class="card-title" title="Aeroplane">Aeroplane</h3>
+                  <p class="card-subtitle" title="Sushin Shyam, Gana Bala, Rajpriyan">Sushin Shyam, Gana Bala, Rajpriyan</p>
+                </div>
+              </div>
+
+              <!-- Song 6: Never Left (with explicit badge) -->
+              <div class="music-card song-card" data-song-id="6" data-title="Never Left" data-artist="Shubh" data-cover="assets/images/song_neverleft_hd.jpg">
+                <div class="card-image-box">
+                  <img src="assets/images/song_neverleft_hd.jpg" alt="Never Left" class="card-img" loading="lazy">
+                  <button class="card-play-btn" title="Play Never Left" aria-label="Play Never Left">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                      <path d="m7.05 3.606 13.49 7.788a.7.7 0 0 1 0 1.212L7.05 20.394A.7.7 0 0 1 6 19.788V4.212a.7.7 0 0 1 1.05-.606z"/>
+                    </svg>
+                  </button>
+                </div>
+                <div class="card-info">
+                  <h3 class="card-title" title="Never Left">Never Left</h3>
+                  <p class="card-subtitle explicit-artist" title="Shubh">
+                    <span class="badge-explicit">E</span>
+                    <span class="artist-name-text">Shubh</span>
+                  </p>
+                </div>
+              </div>
+
+            </div>
+          </section>
+
+          <!-- Section 2: Popular artists -->
+          <section class="content-section" id="popularArtistsSection">
+            <div class="section-header">
+              <h2 class="section-title">Popular artists</h2>
+              <a href="#show-all-artists" class="section-show-all">Show all</a>
+            </div>
+
+            <div class="cards-grid artists-grid">
+              
+              <!-- Artist 1: Pritam -->
+              <div class="music-card artist-card" data-artist-name="Pritam">
+                <div class="card-image-box artist-avatar-box">
+                  <img src="assets/images/artist_pritam_2x.jpg" alt="Pritam" class="card-img artist-avatar" loading="lazy">
+                  <button class="card-play-btn" title="Play Pritam" aria-label="Play Pritam">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                      <path d="m7.05 3.606 13.49 7.788a.7.7 0 0 1 0 1.212L7.05 20.394A.7.7 0 0 1 6 19.788V4.212a.7.7 0 0 1 1.05-.606z"/>
+                    </svg>
+                  </button>
+                </div>
+                <div class="card-info">
+                  <h3 class="card-title" title="Pritam">Pritam</h3>
+                  <p class="card-subtitle">Artist</p>
+                </div>
+              </div>
+
+              <!-- Artist 2: A.R. Rahman -->
+              <div class="music-card artist-card" data-artist-name="A.R. Rahman">
+                <div class="card-image-box artist-avatar-box">
+                  <img src="assets/images/artist_ar_rahman_2x.jpg" alt="A.R. Rahman" class="card-img artist-avatar" loading="lazy">
+                  <button class="card-play-btn" title="Play A.R. Rahman" aria-label="Play A.R. Rahman">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                      <path d="m7.05 3.606 13.49 7.788a.7.7 0 0 1 0 1.212L7.05 20.394A.7.7 0 0 1 6 19.788V4.212a.7.7 0 0 1 1.05-.606z"/>
+                    </svg>
+                  </button>
+                </div>
+                <div class="card-info">
+                  <h3 class="card-title" title="A.R. Rahman">A.R. Rahman</h3>
+                  <p class="card-subtitle">Artist</p>
+                </div>
+              </div>
+
+              <!-- Artist 3: Arijit Singh -->
+              <div class="music-card artist-card" data-artist-name="Arijit Singh">
+                <div class="card-image-box artist-avatar-box">
+                  <img src="assets/images/artist_arijit_2x.jpg" alt="Arijit Singh" class="card-img artist-avatar" loading="lazy">
+                  <button class="card-play-btn" title="Play Arijit Singh" aria-label="Play Arijit Singh">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                      <path d="m7.05 3.606 13.49 7.788a.7.7 0 0 1 0 1.212L7.05 20.394A.7.7 0 0 1 6 19.788V4.212a.7.7 0 0 1 1.05-.606z"/>
+                    </svg>
+                  </button>
+                </div>
+                <div class="card-info">
+                  <h3 class="card-title" title="Arijit Singh">Arijit Singh</h3>
+                  <p class="card-subtitle">Artist</p>
+                </div>
+              </div>
+
+              <!-- Artist 4: Sachin-Jigar -->
+              <div class="music-card artist-card" data-artist-name="Sachin-Jigar">
+                <div class="card-image-box artist-avatar-box">
+                  <img src="assets/images/artist_sachin_jigar_2x.jpg" alt="Sachin-Jigar" class="card-img artist-avatar" loading="lazy">
+                  <button class="card-play-btn" title="Play Sachin-Jigar" aria-label="Play Sachin-Jigar">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                      <path d="m7.05 3.606 13.49 7.788a.7.7 0 0 1 0 1.212L7.05 20.394A.7.7 0 0 1 6 19.788V4.212a.7.7 0 0 1 1.05-.606z"/>
+                    </svg>
+                  </button>
+                </div>
+                <div class="card-info">
+                  <h3 class="card-title" title="Sachin-Jigar">Sachin-Jigar</h3>
+                  <p class="card-subtitle">Artist</p>
+                </div>
+              </div>
+
+              <!-- Artist 5: Vishal-Shekhar -->
+              <div class="music-card artist-card" data-artist-name="Vishal-Shekhar">
+                <div class="card-image-box artist-avatar-box">
+                  <img src="assets/images/artist_vishal_shekhar_2x.jpg" alt="Vishal-Shekhar" class="card-img artist-avatar" loading="lazy">
+                  <button class="card-play-btn" title="Play Vishal-Shekhar" aria-label="Play Vishal-Shekhar">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                      <path d="m7.05 3.606 13.49 7.788a.7.7 0 0 1 0 1.212L7.05 20.394A.7.7 0 0 1 6 19.788V4.212a.7.7 0 0 1 1.05-.606z"/>
+                    </svg>
+                  </button>
+                </div>
+                <div class="card-info">
+                  <h3 class="card-title" title="Vishal-Shekhar">Vishal-Shekhar</h3>
+                  <p class="card-subtitle">Artist</p>
+                </div>
+              </div>
+
+              <!-- Artist 6: Atif Aslam -->
+              <div class="music-card artist-card" data-artist-name="Atif Aslam">
+                <div class="card-image-box artist-avatar-box">
+                  <img src="assets/images/artist_atif_aslam_full.jpg" alt="Atif Aslam" class="card-img artist-avatar" loading="lazy">
+                  <button class="card-play-btn" title="Play Atif Aslam" aria-label="Play Atif Aslam">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                      <path d="m7.05 3.606 13.49 7.788a.7.7 0 0 1 0 1.212L7.05 20.394A.7.7 0 0 1 6 19.788V4.212a.7.7 0 0 1 1.05-.606z"/>
+                    </svg>
+                  </button>
+                </div>
+                <div class="card-info">
+                  <h3 class="card-title" title="Atif Aslam">Atif Aslam</h3>
+                  <p class="card-subtitle">Artist</p>
+                </div>
+              </div>
+
+            </div>
+          </section>
+
+          <!-- Section 3: Featured Charts (from Image 1!) -->
+          <section class="content-section" id="featuredChartsSection">
+            <div class="section-header">
+              <h2 class="section-title">Weekly Music Charts</h2>
+              <a href="#show-all-charts" class="section-show-all">Show all</a>
+            </div>
+
+            <div class="cards-grid charts-grid">
+              
+              <!-- Chart 1: Songs Global -->
+              <div class="music-card chart-card" data-chart-id="sg">
+                <div class="card-image-box chart-artwork-container purple-chart">
+                  <div class="chart-content-overlay">
+                    <div class="chart-title-text">
+                      <span>Songs</span>
+                      <span>Global</span>
+                    </div>
+                    <div class="chart-badge">
+                      <svg class="diagonal-arrow" viewBox="0 0 24 24" width="12" height="12" fill="currentColor">
+                        <path d="M5 19L19 5M19 5H9M19 5V15" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                      </svg>
+                      <span>Weekly Music Charts</span>
+                    </div>
+                  </div>
+                  <button class="card-play-btn" title="Play Top Songs Global" aria-label="Play Top Songs Global">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                      <path d="m7.05 3.606 13.49 7.788a.7.7 0 0 1 0 1.212L7.05 20.394A.7.7 0 0 1 6 19.788V4.212a.7.7 0 0 1 1.05-.606z"/>
+                    </svg>
+                  </button>
+                </div>
+                <div class="card-info">
+                  <p class="card-subtitle">Your weekly update of the most played tracks...</p>
+                </div>
+              </div>
+
+              <!-- Chart 2: Songs India -->
+              <div class="music-card chart-card" data-chart-id="si">
+                <div class="card-image-box chart-artwork-container red-chart">
+                  <div class="chart-content-overlay">
+                    <div class="chart-title-text">
+                      <span>Songs</span>
+                      <span>India</span>
+                    </div>
+                    <div class="chart-badge">
+                      <svg class="diagonal-arrow" viewBox="0 0 24 24" width="12" height="12" fill="currentColor">
+                        <path d="M5 19L19 5M19 5H9M19 5V15" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                      </svg>
+                      <span>Weekly Music Charts</span>
+                    </div>
+                  </div>
+                  <button class="card-play-btn" title="Play Top Songs India" aria-label="Play Top Songs India">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                      <path d="m7.05 3.606 13.49 7.788a.7.7 0 0 1 0 1.212L7.05 20.394A.7.7 0 0 1 6 19.788V4.212a.7.7 0 0 1 1.05-.606z"/>
+                    </svg>
+                  </button>
+                </div>
+                <div class="card-info">
+                  <p class="card-subtitle">Your weekly update of the most played tracks...</p>
+                </div>
+              </div>
+
+              <!-- Chart 3: Top 50 Global -->
+              <div class="music-card chart-card" data-chart-id="t50g">
+                <div class="card-image-box chart-artwork-container blue-chart">
+                  <div class="chart-content-overlay top50-overlay">
+                    <div class="top50-top-label">top 50</div>
+                    <div class="top50-divider"></div>
+                    <div class="top50-bottom-label">GLOBAL</div>
+                  </div>
+                  <button class="card-play-btn" title="Play Top 50 Global" aria-label="Play Top 50 Global">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                      <path d="m7.05 3.606 13.49 7.788a.7.7 0 0 1 0 1.212L7.05 20.394A.7.7 0 0 1 6 19.788V4.212a.7.7 0 0 1 1.05-.606z"/>
+                    </svg>
+                  </button>
+                </div>
+                <div class="card-info">
+                  <p class="card-subtitle">Your daily update of the most played tracks righ...</p>
+                </div>
+              </div>
+
+              <!-- Chart 4: Top 50 India -->
+              <div class="music-card chart-card" data-chart-id="t50i">
+                <div class="card-image-box chart-artwork-container green-chart">
+                  <div class="chart-content-overlay top50-overlay">
+                    <div class="top50-top-label">top 50</div>
+                    <div class="top50-divider"></div>
+                    <div class="top50-bottom-label">INDIA</div>
+                  </div>
+                  <button class="card-play-btn" title="Play Top 50 India" aria-label="Play Top 50 India">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                      <path d="m7.05 3.606 13.49 7.788a.7.7 0 0 1 0 1.212L7.05 20.394A.7.7 0 0 1 6 19.788V4.212a.7.7 0 0 1 1.05-.606z"/>
+                    </svg>
+                  </button>
+                </div>
+                <div class="card-info">
+                  <p class="card-subtitle">Your daily update of the most played tracks righ...</p>
+                </div>
+              </div>
+
+            </div>
+          </section>
+
+          <!-- Main Spotify Footer (from Image 1!) -->
+          <footer class="main-spotify-footer">
+            <div class="footer-columns-grid">
+              
+              <!-- Column 1: Company -->
+              <div class="footer-nav-col">
+                <h4 class="col-heading">Company</h4>
+                <ul>
+                  <li><a href="#about">About</a></li>
+                  <li><a href="#jobs">Jobs</a></li>
+                  <li><a href="#for-the-record">For the Record</a></li>
+                </ul>
+              </div>
+
+              <!-- Column 2: Communities -->
+              <div class="footer-nav-col">
+                <h4 class="col-heading">Communities</h4>
+                <ul>
+                  <li><a href="#for-artists">For Artists</a></li>
+                  <li><a href="#for-creators">For Creators</a></li>
+                  <li><a href="#for-authors">For Authors</a></li>
+                  <li><a href="#developers">Developers</a></li>
+                  <li><a href="#advertising">Advertising</a></li>
+                  <li><a href="#investors">Investors</a></li>
+                  <li><a href="#vendors">Vendors</a></li>
+                </ul>
+              </div>
+
+              <!-- Column 3: Useful links -->
+              <div class="footer-nav-col">
+                <h4 class="col-heading">Useful links</h4>
+                <ul>
+                  <li><a href="#support">Support</a></li>
+                  <li><a href="#free-mobile-app">Free Mobile App</a></li>
+                  <li><a href="#popular-by-country">Popular by Country</a></li>
+                  <li><a href="#top-song-lyrics">Top Song Lyrics</a></li>
+                  <li><a href="#import-music">Import your music</a></li>
+                </ul>
+              </div>
+
+              <!-- Column 4: Spotify Plans -->
+              <div class="footer-nav-col">
+                <h4 class="col-heading">Spotify Plans</h4>
+                <ul>
+                  <li><a href="#premium-standard">Premium Standard</a></li>
+                  <li><a href="#premium-platinum">Premium Platinum</a></li>
+                  <li><a href="#premium-student">Premium Student</a></li>
+                  <li><a href="#spotify-free">Spotify Free</a></li>
+                </ul>
+              </div>
+
+              <!-- Social Links -->
+              <div class="footer-social-col">
+                <a href="https://instagram.com" class="social-circle-btn" title="Instagram" target="_blank" rel="noopener">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                  </svg>
+                </a>
+                <a href="https://x.com" class="social-circle-btn" title="X (Twitter)" target="_blank" rel="noopener">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                  </svg>
+                </a>
+                <a href="https://facebook.com" class="social-circle-btn" title="Facebook" target="_blank" rel="noopener">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                  </svg>
+                </a>
+              </div>
+
+            </div>
+
+            <!-- Footer Bottom Divider & Copyright -->
+            <div class="footer-bottom-bar">
+              <div class="footer-legal-inline">
+                <a href="#legal">Legal</a>
+                <a href="#safety">Safety & Privacy Center</a>
+                <a href="#privacy">Privacy Policy</a>
+                <a href="#cookies">Cookies</a>
+                <a href="#ads">About Ads</a>
+                <a href="#accessibility">Accessibility</a>
+              </div>
+              <div class="footer-copyright">
+                © 2026 Spotify AB
+              </div>
+            </div>
+          </footer>
+
+        </div>
+      </main>
+
+    </div>
+
+    <!-- Active Song Playback Bar (Reveals when user clicks any play button) -->
+    <div class="interactive-music-bar" id="musicPlayerBar" style="display: none;">
+      <!-- Left: Track Info -->
+      <div class="now-playing-left">
+        <img src="assets/images/song_dilruba_hd.jpg" alt="Track Art" id="playerThumb" class="player-thumbnail">
+        <div class="player-track-info">
+          <div class="player-track-title" id="playerTitle">Dilruba Dilnasheen</div>
+          <div class="player-track-artist" id="playerArtist">Rito Riba, Siddhant Kaushal</div>
+        </div>
+        <button class="player-like-btn" id="playerLikeBtn" title="Save to Your Library">
+          <svg class="heart-icon outline" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+          <svg class="heart-icon filled" viewBox="0 0 24 24" width="18" height="18" fill="#1ed760" style="display:none;">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Center: Controls & Progress -->
+      <div class="now-playing-center">
+        <div class="player-controls">
+          <button class="ctrl-btn" id="ctrlShuffleBtn" title="Enable shuffle">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+              <path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z"/>
+            </svg>
+          </button>
+          <button class="ctrl-btn" id="ctrlPrevBtn" title="Previous">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+              <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/>
+            </svg>
+          </button>
+          <button class="play-pause-circle-btn" id="ctrlPlayPauseBtn" title="Play / Pause">
+            <svg class="ctrl-icon-play" viewBox="0 0 24 24" width="20" height="20" fill="#000" style="display:none;">
+              <path d="m7.05 3.606 13.49 7.788a.7.7 0 0 1 0 1.212L7.05 20.394A.7.7 0 0 1 6 19.788V4.212a.7.7 0 0 1 1.05-.606z"/>
+            </svg>
+            <svg class="ctrl-icon-pause" viewBox="0 0 24 24" width="20" height="20" fill="#000">
+              <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+            </svg>
+          </button>
+          <button class="ctrl-btn" id="ctrlNextBtn" title="Next">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+              <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/>
+            </svg>
+          </button>
+          <button class="ctrl-btn" id="ctrlRepeatBtn" title="Enable repeat">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+              <path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Progress Timeline -->
+        <div class="player-timeline">
+          <span class="time-label" id="currentTimeLabel">0:24</span>
+          <div class="timeline-bar" id="timelineBar">
+            <div class="timeline-progress" id="timelineProgress" style="width: 14%;"></div>
+          </div>
+          <span class="time-label" id="totalDurationLabel">3:18</span>
+        </div>
+      </div>
+
+      <!-- Right: Volume & Options -->
+      <div class="now-playing-right">
+        <button class="ctrl-btn" id="lyricsBtn" title="Lyrics">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+          </svg>
+        </button>
+        <button class="ctrl-btn" id="queueBtn" title="Queue">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+            <path d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/>
+          </svg>
+        </button>
+        <button class="ctrl-btn" id="volumeMuteBtn" title="Mute / Unmute">
+          <svg class="vol-icon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+          </svg>
+        </button>
+        <div class="volume-bar-wrapper">
+          <input type="range" min="0" max="100" value="75" class="volume-slider" id="volumeSlider" title="Volume">
+        </div>
+        <button class="ctrl-btn" id="closePlayerBtn" title="Back to Spotify Preview">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Bottom Sticky Banner ("Preview of Spotify") -->
+    <div class="spotify-preview-banner" id="previewBanner">
+      <div class="banner-text-group">
+        <h4 class="banner-title">Preview of Spotify</h4>
+        <p class="banner-subtitle">Sign up to get unlimited songs and podcasts with occasional ads. No credit card needed.</p>
+      </div>
+      <button class="btn-signup-free" id="signupFreeBtn">Sign up for free</button>
+    </div>
+
+    <!-- Mobile Bottom Navigation Bar (Home, Search, Your Library, Premium) -->
+    <nav class="mobile-bottom-nav">
+      <button class="mobile-nav-item active" id="mobHomeBtn">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+          <path d="M13.5 1.515a3 3 0 0 0-3 0L3 5.845a2 2 0 0 0-1 1.732V21a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-6h4v6a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V7.577a2 2 0 0 0-1-1.732l-7.5-4.33z"/>
+        </svg>
+        <span>Home</span>
+      </button>
+      <button class="mobile-nav-item" id="mobSearchBtn">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+          <path d="M10.533 1.278a9.255 9.255 0 1 0 5.688 16.554l5.378 5.378a1 1 0 0 0 1.414-1.414l-5.378-5.378A9.255 9.255 0 0 0 10.533 1.278zm-7.255 9.255a7.255 7.255 0 1 1 14.51 0 7.255 7.255 0 0 1-14.51 0z"/>
+        </svg>
+        <span>Search</span>
+      </button>
+      <button class="mobile-nav-item" id="mobLibraryBtn">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+          <path d="M15.5 2.134A1 1 0 0 0 14 3v18a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V3a1 1 0 0 0-1.5-.866l-5 3zM16 4.732l4-2.4V20h-4V4.732zM8.5 2.134A1 1 0 0 0 7 3v18a1 1 0 0 0 1.5.866l5-3A1 1 0 0 0 14 18V3a1 1 0 0 0-1-1H9a1 1 0 0 0-.5.134zM9 4h3v13.268l-3 1.8V4z"/>
+        </svg>
+        <span>Your Library</span>
+      </button>
+      <button class="mobile-nav-item" id="mobPremiumBtn">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+          <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.503 17.306c-.215.353-.674.464-1.026.248-2.809-1.716-6.345-2.104-10.51-1.152-.401.092-.796-.157-.888-.558-.092-.401.157-.796.558-.888 4.568-1.044 8.49-.607 11.618 1.304.352.215.464.674.248 1.026z"/>
+        </svg>
+        <span>Premium</span>
+      </button>
+    </nav>
+
+    <!-- Modal: Log In / Sign Up -->
+    <div class="modal-backdrop" id="authModal" style="display:none;">
+      <div class="auth-modal-dialog">
+        <button class="modal-close-btn" id="closeAuthModalBtn">✕</button>
+        <div class="auth-modal-header">
+          <svg viewBox="0 0 24 24" width="40" height="40" fill="#fff">
+            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.503 17.306c-.215.353-.674.464-1.026.248-2.809-1.716-6.345-2.104-10.51-1.152-.401.092-.796-.157-.888-.558-.092-.401.157-.796.558-.888 4.568-1.044 8.49-.607 11.618 1.304.352.215.464.674.248 1.026zm1.47-3.264c-.27.439-.848.577-1.287.307-3.216-1.977-8.118-2.548-11.921-1.393-.497.151-1.025-.133-1.176-.63-.151-.497.133-1.025.63-1.176 4.348-1.32 9.756-.684 13.447 1.585.439.27.577.848.307 1.287zm.126-3.411c-3.856-2.29-10.222-2.502-13.907-1.383-.591.179-1.218-.16-1.397-.751-.179-.591.16-1.218.751-1.397 4.237-1.286 11.272-1.037 15.698 1.589.532.316.706 1.008.39 1.54-.316.533-1.008.707-1.54.391z"/>
+          </svg>
+          <h2 id="authModalTitle">Log in to Spotify</h2>
+        </div>
+
+        <div class="auth-social-buttons">
+          <button class="btn-social-auth">
+            <svg viewBox="0 0 24 24" width="20" height="20">
+              <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/>
+              <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/>
+              <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.17 0 9.99 0 12s.45 3.83 1.25 5.42l4.03-3.15z"/>
+              <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+            </svg>
+            <span>Continue with Google</span>
+          </button>
+          <button class="btn-social-auth">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="#1877F2">
+              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+            <span>Continue with Facebook</span>
+          </button>
+          <button class="btn-social-auth">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="#fff">
+              <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.62-.75 1.04-1.8 0.92-2.85-.9.04-1.98.6-2.62 1.34-.56.64-1.05 1.71-.92 2.73 1.01.08 2.01-.5 2.62-1.22z"/>
+            </svg>
+            <span>Continue with Apple</span>
+          </button>
+        </div>
+
+        <div class="auth-divider">
+          <span>or</span>
+        </div>
+
+        <form class="auth-form" id="authForm" onsubmit="event.preventDefault();">
+          <div class="form-group">
+            <label for="authEmail">Email or username</label>
+            <input type="text" id="authEmail" placeholder="Email or username" required>
+          </div>
+          <div class="form-group">
+            <label for="authPassword">Password</label>
+            <input type="password" id="authPassword" placeholder="Password" required>
+          </div>
+          <button type="submit" class="btn-auth-submit" id="authSubmitBtn">Log In</button>
+        </form>
+
+        <div class="auth-footer-prompt">
+          <span id="authTogglePrompt">Don't have an account?</span>
+          <button class="auth-toggle-link" id="authToggleBtn">Sign up for Spotify</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Language Selector -->
+    <div class="modal-backdrop" id="langModal" style="display:none;">
+      <div class="lang-modal-dialog">
+        <button class="modal-close-btn" id="closeLangModalBtn">✕</button>
+        <h3>Choose a language</h3>
+        <p class="lang-subtext">This updates what you read on open.spotify.com</p>
+        <div class="lang-grid">
+          <button class="lang-option-btn active" data-lang="English"><strong>English</strong><span>English</span></button>
+          <button class="lang-option-btn" data-lang="Español"><strong>Español de España</strong><span>Spanish</span></button>
+          <button class="lang-option-btn" data-lang="Deutsch"><strong>Deutsch</strong><span>German</span></button>
+          <button class="lang-option-btn" data-lang="Français"><strong>Français</strong><span>French</span></button>
+          <button class="lang-option-btn" data-lang="हिन्दी"><strong>हिन्दी</strong><span>Hindi</span></button>
+          <button class="lang-option-btn" data-lang="ਪੰਜਾਬੀ"><strong>ਪੰਜਾਬੀ</strong><span>Punjabi</span></button>
+          <button class="lang-option-btn" data-lang="தமிழ்"><strong>தமிழ்</strong><span>Tamil</span></button>
+          <button class="lang-option-btn" data-lang="తెలుగు"><strong>తెలుగు</strong><span>Telugu</span></button>
+          <button class="lang-option-btn" data-lang="日本語"><strong>日本語</strong><span>Japanese</span></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast-notification" id="toastNotification"></div>
+
+  </div>
+
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
+
